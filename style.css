@@ -379,3 +379,111 @@ body.loaded .transition-wipe {
     transform: skewX(-20deg) scale(1.1);
     animation: p5HoverShake 0.1s infinite alternate;
 }
+
+/* --- Mobile Optimization --- */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 20px 10px;
+    }
+
+    .ransom-note {
+        font-size: 3.5rem;
+    }
+
+    .char-box {
+        padding: 5px 10px;
+    }
+
+    .content-panel {
+        flex-direction: column;
+        padding: 0 10px;
+        gap: 40px;
+    }
+
+    .main-menu {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+
+    .menu-item a {
+        font-size: 2rem;
+        padding: 8px 15px;
+        border-width: 3px;
+        box-shadow: 4px 4px 0 var(--p5-red);
+    }
+
+    .menu-item:hover a {
+        box-shadow: 4px 4px 0 var(--p5-white);
+    }
+
+    .info-box {
+        width: 100%;
+        max-width: 400px;
+        transform: rotate(2deg) skewX(-5deg);
+    }
+
+    .date-container {
+        font-size: 3.5rem;
+        transform: translateX(10px) rotate(-2deg);
+    }
+
+    .date-container .month {
+        font-size: 4.5rem;
+    }
+
+    .date-container .weekday {
+        font-size: 1.8rem;
+    }
+
+    .alert-box {
+        padding: 15px 20px;
+        border-width: 5px;
+        box-shadow: 10px 10px 0 var(--p5-black), inset 4px 4px 0 var(--p5-white);
+    }
+
+    .alert-label {
+        font-size: 1.2rem;
+        padding: 3px 10px;
+        transform: rotate(-3deg) translateY(-25px);
+    }
+
+    .alert-title {
+        font-size: 2rem;
+        margin-top: -10px;
+    }
+
+    .alert-subtitle {
+        font-size: 1.3rem;
+        padding: 5px 12px;
+        margin-top: 15px;
+    }
+
+    .alert-action {
+        font-size: 1.6rem;
+        margin-top: 10px;
+    }
+
+    .decorative-star {
+        font-size: 12rem;
+        right: -5%;
+        top: 5%;
+    }
+
+    .decorative-text {
+        font-size: 4rem;
+        bottom: -20px;
+        left: 10px;
+    }
+
+    .back-link {
+        font-size: 1.6rem;
+        padding: 8px 20px;
+        box-shadow: 4px 4px 0 var(--p5-red);
+        border-width: 3px;
+    }
+
+    .back-link:hover {
+        box-shadow: 4px 4px 0 var(--p5-white);
+    }
+}
