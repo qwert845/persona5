@@ -1,437 +1,98 @@
-/* ========================================
-   PERSONA 5 STYLE UI - INTERACTIONS
-   ======================================== */
-
-(function () {
-    'use strict';
-
-    // ─── DOM REFERENCES ───
-    const introOverlay = document.getElementById('intro-overlay');
-    const cursorDot = document.getElementById('cursor-dot');
-    const cursorRing = document.getElementById('cursor-ring');
-    const header = document.getElementById('header');
-    const menuToggle = document.getElementById('menu-toggle');
-    const navList = document.getElementById('nav-list');
-    const navLinks = document.querySelectorAll('.header__nav-link');
-    const screenWipe = document.getElementById('screen-wipe');
-    const contactForm = document.getElementById('contact-form');
-
-    // ─── STATE ───
-    let mouseX = 0, mouseY = 0;
-    let dotX = 0, dotY = 0;
-    let ringX = 0, ringY = 0;
-    let isWiping = false;
-
-    // ═══════════════════════════════════════
-    // INTRO SEQUENCE
-    // ═══════════════════════════════════════
-    function runIntro() {
-        document.body.style.overflow = 'hidden';
-
-        const lines = document.querySelectorAll('.intro-text__line');
-
-        // Stagger text reveal
-        lines.forEach((line, i) => {
-            const delay = parseInt(line.dataset.delay) || i * 200;
-            setTimeout(() => line.classList.add('show'), 300 + delay);
+document.addEventListener("DOMContentLoaded", () => {
+    // 0. 초기 로딩 및 진입 애니메이션 작동
+    setTimeout(() => {
+        document.body.classList.add("loaded");
+        document.querySelectorAll(".animate-entrance").forEach(el => {
+            el.classList.add("entered");
         });
+    }, 100);
 
-        // Close intro after all text shown
-        setTimeout(() => {
-            introOverlay.classList.add('closing');
-        }, 1800);
-
-        setTimeout(() => {
-            introOverlay.classList.add('done');
-            document.body.style.overflow = '';
-        }, 2800);
-    }
-
-    // ═══════════════════════════════════════
-    // CUSTOM CURSOR
-    // ═══════════════════════════════════════
-    function initCursor() {
-        if (window.matchMedia('(max-width: 768px)').matches) return;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        // Hover detection for interactive elements
-        const hoverTargets = document.querySelectorAll('a, button, .char-card, .gallery__item, .news-card, input, textarea');
-        hoverTargets.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursorDot.classList.add('hover');
-                cursorRing.classList.add('hover');
-            });
-            el.addEventListener('mouseleave', () => {
-                cursorDot.classList.remove('hover');
-                cursorRing.classList.remove('hover');
-            });
-        });
-
-        animateCursor();
-    }
-
-    function animateCursor() {
-        // Smooth follow with lerp
-        dotX += (mouseX - dotX) * 0.3;
-        dotY += (mouseY - dotY) * 0.3;
-        ringX += (mouseX - ringX) * 0.12;
-        ringY += (mouseY - ringY) * 0.12;
-
-        cursorDot.style.left = dotX + 'px';
-        cursorDot.style.top = dotY + 'px';
-        cursorRing.style.left = ringX + 'px';
-        cursorRing.style.top = ringY + 'px';
-
-        requestAnimationFrame(animateCursor);
-    }
-
-    // ═══════════════════════════════════════
-    // HEADER SCROLL BEHAVIOR
-    // ═══════════════════════════════════════
-    function initHeader() {
-        let lastScroll = 0;
-
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            if (scrollY > 80) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-            lastScroll = scrollY;
-        });
-    }
-
-    // ═══════════════════════════════════════
-    // MOBILE MENU
-    // ═══════════════════════════════════════
-    function initMobileMenu() {
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            navList.classList.toggle('open');
-        });
-
-        // Close menu on link click
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
-                navList.classList.remove('open');
-            });
-        });
-    }
-
-    // ═══════════════════════════════════════
-    // NAVIGATION WITH WIPE TRANSITION
-    // ═══════════════════════════════════════
-    function initNavigation() {
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
+    // 0.5 링크 클릭 트랜지션 인터셉트
+    const links = document.querySelectorAll("a.nav-link, a.back-link");
+    links.forEach(link => {
+        link.addEventListener("click", (e) => {
+            const targetUrl = link.getAttribute("href");
+            if (targetUrl && targetUrl !== "#" && !targetUrl.startsWith("http")) {
                 e.preventDefault();
-                const targetId = link.getAttribute('href');
+                const wipe = document.getElementById("transition-wipe");
 
-                // Update active state
-                navLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
+                // 트랜지션을 즉시 끄고 왼쪽으로 오버레이 이동
+                wipe.style.transition = "none";
+                wipe.style.transform = "translateX(-120vw) skewX(-25deg)";
 
-                // Trigger wipe transition
-                triggerWipe(() => {
-                    const target = document.querySelector(targetId);
-                    if (target) {
-                        const offsetTop = target.offsetTop - 60;
-                        window.scrollTo({ top: offsetTop, behavior: 'instant' });
-                    }
-                });
-            });
-        });
-    }
+                // 브라우저 렌더링 강제 업데이트를 위해 리플로우 발생
+                void wipe.offsetWidth;
 
-    function triggerWipe(callback) {
-        if (isWiping) return;
-        isWiping = true;
+                // 트랜지션을 다시 켜고 가운데로 이동 애니메이션 수행
+                wipe.style.transition = "transform 0.5s cubic-bezier(0.8, 0, 0.2, 1)";
+                wipe.style.transform = "translateX(0vw) skewX(-25deg)";
 
-        screenWipe.classList.add('active');
-
-        // Execute callback at peak of wipe
-        setTimeout(() => {
-            if (callback) callback();
-        }, 450);
-
-        // Remove wipe class after full animation
-        setTimeout(() => {
-            screenWipe.classList.remove('active');
-            // Reset panel transforms
-            const panels = screenWipe.querySelectorAll('.screen-wipe__panel');
-            panels.forEach(panel => {
-                panel.style.transform = '';
-            });
-            isWiping = false;
-        }, 1100);
-    }
-
-    // ═══════════════════════════════════════
-    // SCROLL REVEAL (IntersectionObserver)
-    // ═══════════════════════════════════════
-    function initScrollReveal() {
-        const revealItems = document.querySelectorAll('.reveal-item, .char-card');
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    // Stagger reveals
-                    const el = entry.target;
-                    const siblings = [...el.parentElement.children];
-                    const idx = siblings.indexOf(el);
-                    setTimeout(() => {
-                        el.classList.add('revealed');
-                    }, idx * 150);
-                    observer.unobserve(el);
-                }
-            });
-        }, {
-            threshold: 0.15,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        revealItems.forEach(item => observer.observe(item));
-    }
-
-    // ═══════════════════════════════════════
-    // CARD TILT EFFECT
-    // ═══════════════════════════════════════
-    function initCardTilt() {
-        const cards = document.querySelectorAll('[data-tilt]');
-
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -8;
-                const rotateY = ((x - centerX) / centerX) * 8;
-
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-                card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                // 애니메이션이 화면을 덮었을 때 페이지 이동
                 setTimeout(() => {
-                    card.style.transition = '';
+                    window.location.href = targetUrl;
                 }, 500);
-            });
-
-            card.addEventListener('mouseenter', () => {
-                card.style.transition = 'none';
-            });
+            }
         });
-    }
+    });
 
-    // ═══════════════════════════════════════
-    // ACTIVE NAV ON SCROLL
-    // ═══════════════════════════════════════
-    function initActiveNavOnScroll() {
-        const sections = document.querySelectorAll('.section');
+    // 1. 랜섬노트 (Ransom Note) 텍스트 자동 스타일링
+    const titleElement = document.getElementById("main-title");
+    if (titleElement) {
+        const text = titleElement.innerText;
+        titleElement.innerHTML = "";
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.id;
-                    navLinks.forEach(link => {
-                        link.classList.toggle('active', link.dataset.section === id);
-                    });
-                }
-            });
-        }, {
-            threshold: 0.3,
-            rootMargin: '-80px 0px 0px 0px'
-        });
+        // 빨강, 검정, 흰색 조합 세트
+        const styles = [
+            { bg: "var(--p5-red)", color: "var(--p5-white)", border: "var(--p5-black)", shadow: "var(--p5-black)" },
+            { bg: "var(--p5-black)", color: "var(--p5-white)", border: "var(--p5-red)", shadow: "var(--p5-red)" },
+            { bg: "var(--p5-white)", color: "var(--p5-red)", border: "var(--p5-black)", shadow: "var(--p5-black)" },
+            { bg: "var(--p5-red)", color: "var(--p5-black)", border: "var(--p5-white)", shadow: "var(--p5-black)" },
+            { bg: "var(--p5-black)", color: "var(--p5-red)", border: "var(--p5-white)", shadow: "var(--p5-white)" }
+        ];
 
-        sections.forEach(sec => observer.observe(sec));
-    }
-
-    // ═══════════════════════════════════════
-    // PARALLAX HERO SHAPES
-    // ═══════════════════════════════════════
-    function initParallax() {
-        const shapes = document.querySelectorAll('.hero__shape');
-
-        window.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 2;
-            const y = (e.clientY / window.innerHeight - 0.5) * 2;
-
-            shapes.forEach((shape, i) => {
-                const speed = (i + 1) * 15;
-                shape.style.transform = shape.style.transform || '';
-                const baseTransform = getComputedStyle(shape).transform;
-
-                shape.style.translate = `${x * speed}px ${y * speed}px`;
-            });
-        });
-    }
-
-    // ═══════════════════════════════════════
-    // CONTACT FORM
-    // ═══════════════════════════════════════
-    function initContactForm() {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const btn = contactForm.querySelector('.btn--submit');
-            const originalText = btn.querySelector('.btn__text').textContent;
-
-            btn.querySelector('.btn__text').textContent = 'CALLING CARD SENT!';
-            btn.style.background = 'var(--color-primary-dark)';
-
-            // Trigger a small wipe effect
-            triggerWipe();
-
-            setTimeout(() => {
-                btn.querySelector('.btn__text').textContent = originalText;
-                btn.style.background = '';
-                contactForm.reset();
-            }, 2000);
-        });
-    }
-
-    // ═══════════════════════════════════════
-    // GLITCH TEXT EFFECT (RANDOM TRIGGER)
-    // ═══════════════════════════════════════
-    function initGlitchEffect() {
-        const glitchEls = document.querySelectorAll('[data-glitch]');
-
-        function triggerGlitch() {
-            glitchEls.forEach(el => {
-                el.style.animation = 'none';
-                el.offsetHeight; // reflow
-                el.style.animation = '';
-            });
-        }
-
-        // Trigger glitch periodically
-        setInterval(triggerGlitch, 5000);
-    }
-
-    // ═══════════════════════════════════════
-    // HERO TEXT ANIMATION (STAGGERED ENTRANCE)
-    // ═══════════════════════════════════════
-    function initHeroAnimation() {
-        const heroContent = document.querySelector('.hero__content');
-        if (!heroContent) return;
-
-        // Wait for intro to finish
-        setTimeout(() => {
-            heroContent.style.opacity = '1';
-
-            const titleLines = heroContent.querySelectorAll('.hero__title-line');
-            const subtitle = heroContent.querySelector('.hero__subtitle');
-            const cta = heroContent.querySelector('.hero__cta');
-
-            // Stagger entrance
-            titleLines.forEach((line, i) => {
-                line.style.opacity = '0';
-                line.style.transform += ' translateY(40px)';
-                setTimeout(() => {
-                    line.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-                    line.style.opacity = '1';
-                    line.style.transform = line.style.transform.replace('translateY(40px)', 'translateY(0)');
-                }, 200 + i * 200);
-            });
-
-            if (subtitle) {
-                subtitle.style.opacity = '0';
-                setTimeout(() => {
-                    subtitle.style.transition = 'opacity 0.8s ease';
-                    subtitle.style.opacity = '1';
-                }, 800);
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            if (char === " ") {
+                titleElement.appendChild(document.createTextNode("\u00A0"));
+                continue;
             }
 
-            if (cta) {
-                cta.style.opacity = '0';
-                cta.style.transform += ' translateY(20px)';
-                setTimeout(() => {
-                    cta.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-                    cta.style.opacity = '1';
-                    cta.style.transform = cta.style.transform.replace('translateY(20px)', 'translateY(0)');
-                }, 1000);
-            }
-        }, 2800);
-    }
+            const span = document.createElement("span");
+            span.innerText = char;
+            span.classList.add("char-box");
 
-    // ═══════════════════════════════════════
-    // BACKGROUND NOISE GRAIN EFFECT
-    // ═══════════════════════════════════════
-    function initGrainEffect() {
-        const canvas = document.createElement('canvas');
-        canvas.style.cssText = `
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.04;
-      mix-blend-mode: overlay;
-    `;
-        document.body.appendChild(canvas);
+            // 무작위 스타일 할당
+            const style = styles[Math.floor(Math.random() * styles.length)];
+            span.style.backgroundColor = style.bg;
+            span.style.color = style.color;
+            span.style.border = `5px solid ${style.border}`;
+            span.style.boxShadow = `6px 6px 0 ${style.shadow}`;
 
-        const ctx = canvas.getContext('2d');
-        let w, h;
+            // 무작위 회전 및 크기 조절
+            const rotation = (Math.random() * 24) - 12; // -12 ~ 12도
+            const scale = 0.95 + (Math.random() * 0.15); // 0.95 ~ 1.1
+            const translateY = (Math.random() * 14) - 7;
 
-        function resize() {
-            w = canvas.width = window.innerWidth;
-            h = canvas.height = window.innerHeight;
+            span.style.transform = `rotate(${rotation}deg) scale(${scale}) translateY(${translateY}px)`;
+
+            titleElement.appendChild(span);
         }
-
-        function renderGrain() {
-            const imageData = ctx.createImageData(w, h);
-            const data = imageData.data;
-
-            for (let i = 0; i < data.length; i += 4) {
-                const val = Math.random() * 255;
-                data[i] = val;
-                data[i + 1] = val;
-                data[i + 2] = val;
-                data[i + 3] = 255;
-            }
-
-            ctx.putImageData(imageData, 0, 0);
-            requestAnimationFrame(renderGrain);
-        }
-
-        window.addEventListener('resize', resize);
-        resize();
-        renderGrain();
     }
 
-    // ═══════════════════════════════════════
-    // INITIALIZE EVERYTHING
-    // ═══════════════════════════════════════
-    function init() {
-        runIntro();
-        initCursor();
-        initHeader();
-        initMobileMenu();
-        initNavigation();
-        initScrollReveal();
-        initCardTilt();
-        initActiveNavOnScroll();
-        initParallax();
-        initContactForm();
-        initGlitchEffect();
-        initHeroAnimation();
-        initGrainEffect();
-    }
+    // 2. 마우스 패럴랙스 효과 (Parallax)
+    document.addEventListener("mousemove", (e) => {
+        const x = (window.innerWidth / 2 - e.pageX) / 40;
+        const y = (window.innerHeight / 2 - e.pageY) / 40;
 
-    // ─── DOM READY ───
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-})();
+        const star = document.querySelector(".decorative-star");
+        const decText = document.querySelector(".decorative-text");
+        const menu = document.querySelector(".main-menu");
+        const infoBox = document.querySelector(".info-box");
+
+        // 각 요소별로 패럴랙스 속도 및 기본 transform 값 유지
+        if (star) star.style.transform = `rotate(20deg) translate(${x * 1.5}px, ${y * 1.5}px)`;
+        if (decText) decText.style.transform = `rotate(-5deg) translate(${x * -2}px, ${y * -2}px)`;
+        if (menu) menu.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
+        if (infoBox) infoBox.style.transform = `rotate(3deg) skewX(-10deg) translate(${x * 0.3}px, ${y * 0.3}px)`;
+    });
+});

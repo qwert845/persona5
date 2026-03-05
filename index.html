@@ -4,365 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAKE YOUR HEART — Persona 5 Style</title>
-    <meta name="description"
-        content="A Persona 5 inspired stylish UI website featuring bold red & black aesthetics, skewed layouts, and dynamic animations.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>카미가카리 | KAMIGAKARI</title>
+    <!-- Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Oswald:wght@400;500;700&family=Permanent+Marker&family=Black+Ops+One&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Black+Han+Sans&family=Do+Hyeon&family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <!-- ===== INTRO OVERLAY ===== -->
-    <div id="intro-overlay" class="intro-overlay">
-        <div class="intro-wipe intro-wipe--1"></div>
-        <div class="intro-wipe intro-wipe--2"></div>
-        <div class="intro-wipe intro-wipe--3"></div>
-        <div class="intro-text">
-            <span class="intro-text__line" data-delay="0">TAKE</span>
-            <span class="intro-text__line" data-delay="200">YOUR</span>
-            <span class="intro-text__line" data-delay="400">HEART</span>
-        </div>
-    </div>
+    <!-- Transition Overlay -->
+    <div class="transition-wipe" id="transition-wipe"></div>
 
-    <!-- ===== CUSTOM CURSOR ===== -->
-    <div id="cursor-dot" class="cursor-dot"></div>
-    <div id="cursor-ring" class="cursor-ring"></div>
+    <!-- Background Elements -->
+    <div class="background-rays"></div>
+    <div class="halftone-overlay"></div>
 
-    <!-- ===== HEADER / NAV ===== -->
-    <header id="header" class="header">
-        <div class="header__logo-wrap">
-            <a href="#" class="header__logo">
-                <span class="header__logo-star">★</span>
-                <span class="header__logo-text">P5</span>
-            </a>
-        </div>
-        <nav class="header__nav" id="main-nav">
-            <button class="header__menu-btn" id="menu-toggle" aria-label="메뉴 토글">
-                <span></span><span></span><span></span>
-            </button>
-            <ul class="header__nav-list" id="nav-list">
-                <li class="header__nav-item"><a href="#hero" class="header__nav-link active"
-                        data-section="hero">HOME</a></li>
-                <li class="header__nav-item"><a href="#characters" class="header__nav-link"
-                        data-section="characters">CHARACTERS</a></li>
-                <li class="header__nav-item"><a href="#gallery" class="header__nav-link"
-                        data-section="gallery">GALLERY</a></li>
-                <li class="header__nav-item"><a href="#news" class="header__nav-link" data-section="news">NEWS</a></li>
-                <li class="header__nav-item"><a href="#contact" class="header__nav-link"
-                        data-section="contact">CONTACT</a></li>
-            </ul>
-        </nav>
-    </header>
+    <main class="container">
+        <!-- Logo / Title Header -->
+        <header class="animate-entrance delay-1">
+            <h1 class="ransom-note" id="main-title">마음의 괴도단</h1>
+        </header>
 
-    <!-- ===== HERO SECTION ===== -->
-    <section id="hero" class="hero section">
-        <div class="hero__bg-shapes">
-            <div class="hero__shape hero__shape--1"></div>
-            <div class="hero__shape hero__shape--2"></div>
-            <div class="hero__shape hero__shape--3"></div>
-        </div>
-        <div class="hero__halftone"></div>
-        <div class="hero__content">
-            <h1 class="hero__title">
-                <span class="hero__title-line hero__title-line--1" data-glitch="PERSONA">PERSONA</span>
-                <span class="hero__title-line hero__title-line--2" data-glitch="5">5</span>
-            </h1>
-            <p class="hero__subtitle">YOU'LL NEVER SEE IT COMING</p>
-            <a href="#characters" class="hero__cta btn btn--primary">
-                <span class="btn__text">EXPLORE NOW</span>
-                <span class="btn__arrow">→</span>
-            </a>
-        </div>
-        <div class="hero__scroll-indicator">
-            <span>SCROLL</span>
-            <div class="hero__scroll-line"></div>
-        </div>
-    </section>
+        <!-- Dynamic Content Section -->
+        <section class="content-panel animate-entrance delay-2">
+            <!-- Main Sidebar Menu -->
+            <nav class="main-menu">
+                <ul>
+                    <li class="menu-item"><a href="skill.html" class="nav-link" data-text="Skill">Skill</a></li>
+                    <li class="menu-item"><a href="item.html" class="nav-link" data-text="Item">Item</a></li>
+                    <li class="menu-item"><a href="equip.html" class="nav-link" data-text="Equip">Equip</a></li>
+                    <li class="menu-item"><a href="persona.html" class="nav-link" data-text="Persona">Persona</a></li>
+                    <li class="menu-item"><a href="stats.html" class="nav-link" data-text="Stats">Stats</a></li>
+                    <li class="menu-item"><a href="confidant.html" class="nav-link" data-text="Confidant">Confidant</a>
+                    </li>
+                    <li class="menu-item"><a href="system.html" class="nav-link" data-text="System">System</a></li>
+                </ul>
+            </nav>
 
-    <!-- ===== CHARACTERS SECTION ===== -->
-    <section id="characters" class="characters section">
-        <div class="section__header">
-            <span class="section__label">01</span>
-            <h2 class="section__title">THE PHANTOM<br>THIEVES</h2>
-            <div class="section__line"></div>
-        </div>
-        <div class="characters__grid">
-            <!-- Card 1: Joker -->
-            <div class="char-card" data-tilt>
-                <div class="char-card__bg"></div>
-                <div class="char-card__inner">
-                    <div class="char-card__silhouette char-card__silhouette--joker">
-                        <svg viewBox="0 0 200 300" class="char-card__svg">
-                            <path
-                                d="M100 20 C60 20 40 60 40 100 C40 130 55 150 70 170 L65 200 L50 280 L80 260 L100 280 L120 260 L150 280 L135 200 L130 170 C145 150 160 130 160 100 C160 60 140 20 100 20Z"
-                                fill="currentColor" />
-                            <circle cx="80" cy="85" r="8" fill="var(--color-bg)" />
-                            <circle cx="120" cy="85" r="8" fill="var(--color-bg)" />
-                            <path d="M70 75 Q100 50 130 75" stroke="var(--color-bg)" stroke-width="3" fill="none" />
-                        </svg>
-                    </div>
-                    <div class="char-card__info">
-                        <span class="char-card__code">WILD CARD</span>
-                        <h3 class="char-card__name">JOKER</h3>
-                        <p class="char-card__desc">Leader of the Phantom Thieves. Wields the power of multiple Personas.
-                        </p>
-                    </div>
+            <div class="info-box">
+                <div class="date-container">
+                    <span class="month">4</span>/<span class="day">18</span> <span class="weekday">수요일</span>
                 </div>
-                <div class="char-card__stripe"></div>
-            </div>
-
-            <!-- Card 2: Skull -->
-            <div class="char-card" data-tilt>
-                <div class="char-card__bg"></div>
-                <div class="char-card__inner">
-                    <div class="char-card__silhouette char-card__silhouette--skull">
-                        <svg viewBox="0 0 200 300" class="char-card__svg">
-                            <path
-                                d="M100 30 C55 30 35 75 35 110 C35 145 50 165 75 185 L70 220 L55 275 L85 255 L100 275 L115 255 L145 275 L130 220 L125 185 C150 165 165 145 165 110 C165 75 145 30 100 30Z"
-                                fill="currentColor" />
-                            <rect x="70" y="90" width="20" height="15" rx="2" fill="var(--color-bg)" />
-                            <rect x="110" y="90" width="20" height="15" rx="2" fill="var(--color-bg)" />
-                            <path d="M80 120 L100 130 L120 120" stroke="var(--color-bg)" stroke-width="3" fill="none" />
-                        </svg>
-                    </div>
-                    <div class="char-card__info">
-                        <span class="char-card__code">CHARIOT</span>
-                        <h3 class="char-card__name">SKULL</h3>
-                        <p class="char-card__desc">Hot-blooded fighter with a rebellious spirit and Captain Kidd.</p>
-                    </div>
-                </div>
-                <div class="char-card__stripe"></div>
-            </div>
-
-            <!-- Card 3: Panther -->
-            <div class="char-card" data-tilt>
-                <div class="char-card__bg"></div>
-                <div class="char-card__inner">
-                    <div class="char-card__silhouette char-card__silhouette--panther">
-                        <svg viewBox="0 0 200 300" class="char-card__svg">
-                            <path
-                                d="M100 25 C65 25 45 60 45 95 C45 125 55 145 70 165 L60 210 L45 280 L80 255 L100 280 L120 255 L155 280 L140 210 L130 165 C145 145 155 125 155 95 C155 60 135 25 100 25Z"
-                                fill="currentColor" />
-                            <ellipse cx="82" cy="85" rx="10" ry="7" fill="var(--color-bg)" />
-                            <ellipse cx="118" cy="85" rx="10" ry="7" fill="var(--color-bg)" />
-                            <path d="M85 110 Q100 120 115 110" stroke="var(--color-bg)" stroke-width="2" fill="none" />
-                        </svg>
-                    </div>
-                    <div class="char-card__info">
-                        <span class="char-card__code">LOVERS</span>
-                        <h3 class="char-card__name">PANTHER</h3>
-                        <p class="char-card__desc">Graceful and fierce. Commands fire with Carmen at her side.</p>
-                    </div>
-                </div>
-                <div class="char-card__stripe"></div>
-            </div>
-
-            <!-- Card 4: Fox -->
-            <div class="char-card" data-tilt>
-                <div class="char-card__bg"></div>
-                <div class="char-card__inner">
-                    <div class="char-card__silhouette char-card__silhouette--fox">
-                        <svg viewBox="0 0 200 300" class="char-card__svg">
-                            <path
-                                d="M100 20 C60 20 30 65 30 105 C30 140 50 160 75 180 L68 215 L50 285 L82 260 L100 285 L118 260 L150 285 L132 215 L125 180 C150 160 170 140 170 105 C170 65 140 20 100 20Z"
-                                fill="currentColor" />
-                            <line x1="70" y1="88" x2="90" y2="88" stroke="var(--color-bg)" stroke-width="4"
-                                stroke-linecap="round" />
-                            <line x1="110" y1="88" x2="130" y2="88" stroke="var(--color-bg)" stroke-width="4"
-                                stroke-linecap="round" />
-                            <path d="M90 115 L100 105 L110 115" stroke="var(--color-bg)" stroke-width="2" fill="none" />
-                        </svg>
-                    </div>
-                    <div class="char-card__info">
-                        <span class="char-card__code">EMPEROR</span>
-                        <h3 class="char-card__name">FOX</h3>
-                        <p class="char-card__desc">An eccentric artist seeking the essence of true beauty.</p>
-                    </div>
-                </div>
-                <div class="char-card__stripe"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== GALLERY SECTION ===== -->
-    <section id="gallery" class="gallery section">
-        <div class="section__header section__header--right">
-            <span class="section__label">02</span>
-            <h2 class="section__title">PALACES &<br>MEMENTOS</h2>
-            <div class="section__line"></div>
-        </div>
-        <div class="gallery__showcase">
-            <div class="gallery__item gallery__item--large reveal-item">
-                <div class="gallery__item-inner">
-                    <div class="gallery__item-visual gallery__item-visual--1">
-                        <div class="gallery__item-pattern"></div>
-                        <span class="gallery__item-label">KAMOSHIDA'S PALACE</span>
-                    </div>
-                    <div class="gallery__item-overlay">
-                        <span class="gallery__item-num">01</span>
-                        <p>Castle of Lust</p>
-                    </div>
+                <div class="alert-box">
+                    <div class="alert-label">퇴학 처분까지 남은 시간</div>
+                    <div class="alert-title">개심까지 기한: 14일</div>
+                    <div class="alert-subtitle">카모시다의 팰리스 보물을 탈취해라</div>
+                    <div class="alert-action">예고장을 보낼 타이밍이다</div>
                 </div>
             </div>
-            <div class="gallery__item gallery__item--medium reveal-item">
-                <div class="gallery__item-inner">
-                    <div class="gallery__item-visual gallery__item-visual--2">
-                        <div class="gallery__item-pattern"></div>
-                        <span class="gallery__item-label">MADARAME'S PALACE</span>
-                    </div>
-                    <div class="gallery__item-overlay">
-                        <span class="gallery__item-num">02</span>
-                        <p>Museum of Vanity</p>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery__item gallery__item--medium reveal-item">
-                <div class="gallery__item-inner">
-                    <div class="gallery__item-visual gallery__item-visual--3">
-                        <div class="gallery__item-pattern"></div>
-                        <span class="gallery__item-label">KANESHIRO'S PALACE</span>
-                    </div>
-                    <div class="gallery__item-overlay">
-                        <span class="gallery__item-num">03</span>
-                        <p>Bank of Gluttony</p>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery__item gallery__item--large reveal-item">
-                <div class="gallery__item-inner">
-                    <div class="gallery__item-visual gallery__item-visual--4">
-                        <div class="gallery__item-pattern"></div>
-                        <span class="gallery__item-label">FUTABA'S PALACE</span>
-                    </div>
-                    <div class="gallery__item-overlay">
-                        <span class="gallery__item-num">04</span>
-                        <p>Pyramid of Wrath</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ===== NEWS / EVENTS SECTION ===== -->
-    <section id="news" class="news section">
-        <div class="section__header">
-            <span class="section__label">03</span>
-            <h2 class="section__title">LATEST<br>UPDATES</h2>
-            <div class="section__line"></div>
-        </div>
-        <div class="news__grid">
-            <article class="news-card reveal-item">
-                <div class="news-card__date">
-                    <span class="news-card__day">04</span>
-                    <span class="news-card__month">MAR</span>
-                </div>
-                <div class="news-card__content">
-                    <span class="news-card__tag">EVENT</span>
-                    <h3 class="news-card__title">Phantom Thieves Anniversary</h3>
-                    <p class="news-card__excerpt">Celebrate the legendary heist that changed everything. Special
-                        commemorative events and exclusive rewards await all members.</p>
-                </div>
-                <div class="news-card__arrow">→</div>
-            </article>
-            <article class="news-card reveal-item">
-                <div class="news-card__date">
-                    <span class="news-card__day">28</span>
-                    <span class="news-card__month">FEB</span>
-                </div>
-                <div class="news-card__content">
-                    <span class="news-card__tag">UPDATE</span>
-                    <h3 class="news-card__title">New Persona Awakening</h3>
-                    <p class="news-card__excerpt">Discover the latest Persona fusions and unlock powerful new abilities
-                        in the Velvet Room.</p>
-                </div>
-                <div class="news-card__arrow">→</div>
-            </article>
-            <article class="news-card reveal-item">
-                <div class="news-card__date">
-                    <span class="news-card__day">15</span>
-                    <span class="news-card__month">FEB</span>
-                </div>
-                <div class="news-card__content">
-                    <span class="news-card__tag">NOTICE</span>
-                    <h3 class="news-card__title">Mementos Expansion</h3>
-                    <p class="news-card__excerpt">The depths of Mementos have been expanded. New shadows and challenges
-                        await in the deepest floors.</p>
-                </div>
-                <div class="news-card__arrow">→</div>
-            </article>
-        </div>
-    </section>
-
-    <!-- ===== CONTACT / CTA SECTION ===== -->
-    <section id="contact" class="contact section">
-        <div class="contact__bg-split"></div>
-        <div class="contact__content">
-            <div class="contact__left">
-                <h2 class="contact__title">
-                    <span>JOIN THE</span>
-                    <span class="contact__title--accent">PHANTOM</span>
-                    <span>THIEVES</span>
-                </h2>
-            </div>
-            <div class="contact__right">
-                <form class="contact__form" id="contact-form">
-                    <div class="form-group">
-                        <input type="text" id="form-name" class="form-input" placeholder=" " autocomplete="off"
-                            required>
-                        <label for="form-name" class="form-label">CODE NAME</label>
-                        <div class="form-line"></div>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="form-email" class="form-input" placeholder=" " autocomplete="off"
-                            required>
-                        <label for="form-email" class="form-label">EMAIL</label>
-                        <div class="form-line"></div>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="form-message" class="form-input form-textarea" placeholder=" " rows="3"
-                            required></textarea>
-                        <label for="form-message" class="form-label">CALLING CARD</label>
-                        <div class="form-line"></div>
-                    </div>
-                    <button type="submit" class="btn btn--primary btn--submit">
-                        <span class="btn__text">SEND CALLING CARD</span>
-                        <span class="btn__arrow">→</span>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer">
-        <div class="footer__inner">
-            <div class="footer__left">
-                <span class="footer__logo">
-                    <span class="header__logo-star">★</span> P5 STYLE
-                </span>
-                <p class="footer__copy">© 2026 Phantom Thieves. All hearts stolen.</p>
-            </div>
-            <div class="footer__right">
-                <div class="footer__links">
-                    <a href="#" class="footer__link">TWITTER</a>
-                    <a href="#" class="footer__link">INSTAGRAM</a>
-                    <a href="#" class="footer__link">YOUTUBE</a>
-                </div>
-            </div>
-        </div>
-        <div class="footer__stripe"></div>
-    </footer>
-
-    <!-- ===== SCREEN WIPE TRANSITION ===== -->
-    <div id="screen-wipe" class="screen-wipe">
-        <div class="screen-wipe__panel screen-wipe__panel--1"></div>
-        <div class="screen-wipe__panel screen-wipe__panel--2"></div>
-        <div class="screen-wipe__panel screen-wipe__panel--3"></div>
-    </div>
+        <!-- Animated visual elements -->
+        <div class="decorative-star animate-entrance delay-3">★</div>
+        <div class="decorative-text animate-entrance delay-4">TAKE YOUR HEART</div>
+    </main>
 
     <script src="script.js"></script>
 </body>
