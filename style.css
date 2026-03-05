@@ -519,4 +519,9 @@ body.loaded .transition-wipe {
         box-shadow: 3px 3px 0 var(--p5-white);
         transform: skewX(-10deg) scale(1.05);
     }
+
+    /* 화면 전환 애니메이션을 화면 밖으로 완전히 치워줍니다 */
+    body.loaded .transition-wipe {
+        transform: translateX(250vw) skewX(-25deg);
+    }
 }
