@@ -383,34 +383,53 @@ body.loaded .transition-wipe {
 /* --- Mobile Optimization --- */
 @media screen and (max-width: 768px) {
     .container {
-        padding: 20px 10px;
+        padding: 15px 5px;
+        overflow-x: hidden;
+    }
+
+    header {
+        margin-bottom: 30px;
+        margin-top: 10px;
     }
 
     .ransom-note {
-        font-size: 3.5rem;
+        font-size: 2.2rem;
+        gap: 3px;
+        flex-wrap: wrap;
+        /* allow wrapping on very small screens */
     }
 
     .char-box {
-        padding: 5px 10px;
+        padding: 3px 8px;
     }
 
     .content-panel {
         flex-direction: column;
-        padding: 0 10px;
-        gap: 40px;
+        padding: 0 5px;
+        gap: 25px;
     }
 
     .main-menu {
-        width: 100%;
-        max-width: 350px;
+        width: 90%;
+        max-width: 320px;
         margin: 0 auto;
     }
 
+    .menu-item {
+        transform: skewX(-8deg);
+        /* reduce skew on mobile */
+    }
+
     .menu-item a {
-        font-size: 2rem;
-        padding: 8px 15px;
-        border-width: 3px;
+        font-size: 1.8rem;
+        padding: 6px 12px;
+        border-width: 2px;
         box-shadow: 4px 4px 0 var(--p5-red);
+        letter-spacing: 1px;
+    }
+
+    .menu-item:hover {
+        transform: skewX(-10deg) translateX(10px) scale(1.05);
     }
 
     .menu-item:hover a {
@@ -419,71 +438,85 @@ body.loaded .transition-wipe {
 
     .info-box {
         width: 100%;
-        max-width: 400px;
-        transform: rotate(2deg) skewX(-5deg);
+        max-width: 340px;
+        transform: rotate(0) skewX(-2deg);
+        /* straighten out */
+        margin: 0 auto;
     }
 
     .date-container {
-        font-size: 3.5rem;
-        transform: translateX(10px) rotate(-2deg);
+        font-size: 2.5rem;
+        transform: translateX(10px) rotate(-1deg);
+        margin-bottom: -5px;
     }
 
     .date-container .month {
-        font-size: 4.5rem;
+        font-size: 3.5rem;
     }
 
     .date-container .weekday {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
     }
 
     .alert-box {
-        padding: 15px 20px;
-        border-width: 5px;
-        box-shadow: 10px 10px 0 var(--p5-black), inset 4px 4px 0 var(--p5-white);
+        padding: 15px 15px;
+        border-width: 4px;
+        box-shadow: 8px 8px 0 var(--p5-black), inset 3px 3px 0 var(--p5-white);
+        clip-path: polygon(1% 0%, 99% 2%, 100% 99%, 0% 98%);
     }
 
     .alert-label {
-        font-size: 1.2rem;
-        padding: 3px 10px;
-        transform: rotate(-3deg) translateY(-25px);
+        font-size: 1.1rem;
+        padding: 2px 8px;
+        transform: rotate(-2deg) translateY(-22px);
+        box-shadow: 2px 2px 0 var(--p5-black);
     }
 
     .alert-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
         margin-top: -10px;
+        -webkit-text-stroke: 1px var(--p5-white);
+        text-shadow: 2px 2px 0 var(--p5-white);
     }
 
     .alert-subtitle {
-        font-size: 1.3rem;
-        padding: 5px 12px;
-        margin-top: 15px;
-    }
-
-    .alert-action {
-        font-size: 1.6rem;
+        font-size: 1.2rem;
+        padding: 5px 10px;
         margin-top: 10px;
     }
 
+    .alert-action {
+        font-size: 1.3rem;
+        margin-top: 8px;
+        letter-spacing: 0;
+    }
+
     .decorative-star {
-        font-size: 12rem;
-        right: -5%;
+        font-size: 8rem;
+        right: -10%;
         top: 5%;
+        opacity: 0.3;
     }
 
     .decorative-text {
-        font-size: 4rem;
-        bottom: -20px;
-        left: 10px;
+        font-size: 3rem;
+        bottom: 0px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-5deg);
+        opacity: 0.15;
     }
 
     .back-link {
-        font-size: 1.6rem;
-        padding: 8px 20px;
-        box-shadow: 4px 4px 0 var(--p5-red);
-        border-width: 3px;
+        font-size: 1.4rem;
+        padding: 6px 15px;
+        box-shadow: 3px 3px 0 var(--p5-red);
+        border-width: 2px;
+        transform: skewX(-8deg);
+        margin-bottom: 20px;
     }
 
     .back-link:hover {
-        box-shadow: 4px 4px 0 var(--p5-white);
+        box-shadow: 3px 3px 0 var(--p5-white);
+        transform: skewX(-10deg) scale(1.05);
     }
 }
